@@ -8,7 +8,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
-
 * {
   margin: 0;
   padding: 0;
@@ -23,10 +22,9 @@ body {
   justify-content: center;
   color: #1f1f1f;
   background: #fafafa;
-  overflow: hidden;
 }
 
-/* WATERMARK BACKGROUND */
+/* BACKGROUND WATERMARK */
 body::before {
   content: "";
   position: fixed;
@@ -49,12 +47,12 @@ body::after {
 .container {
   width: 90%;
   max-width: 720px;
-  background: rgba(255,255,255,0.75);
+  background: rgba(255,255,255,0.8);
   backdrop-filter: blur(20px);
   border-radius: 20px;
   padding: 40px;
   box-shadow: 0 20px 60px rgba(0,0,0,0.08);
-  animation: fadeIn 1s ease;
+  text-align: center;
 }
 
 /* TEXT */
@@ -62,22 +60,21 @@ h1 {
   font-family: 'Playfair Display', serif;
   font-size: 2rem;
   margin-bottom: 20px;
-  text-align: center;
 }
 
 p {
   line-height: 1.7;
   margin-bottom: 18px;
-  text-align: center;
   font-size: 1.05rem;
   color: #444;
 }
 
 /* BUTTONS */
 .buttons {
-  text-align: center;
   margin-top: 25px;
-  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 button {
@@ -85,7 +82,6 @@ button {
   margin: 8px;
   border-radius: 30px;
   border: none;
-  cursor: pointer;
   font-size: 0.95rem;
   transition: all 0.25s ease;
 }
@@ -94,6 +90,7 @@ button {
 .primary {
   background: #ff6b9a;
   color: white;
+  cursor: pointer;
 }
 
 .primary:hover {
@@ -101,28 +98,30 @@ button {
   box-shadow: 0 8px 20px rgba(255,107,154,0.4);
 }
 
-/* SECONDARY */
+/* DISABLED */
 .secondary {
-  background: #f0f0f0;
+  background: #eaeaea;
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 /* TERTIARY */
 .pinky {
   background: #ffe3ef;
+  cursor: pointer;
 }
 
 /* CALENDAR */
 #calendarBox {
   display: none;
   margin-top: 20px;
-  text-align: center;
 }
 
 input[type="date"] {
   padding: 10px;
   border-radius: 10px;
   border: 1px solid #ddd;
-  margin: 10px 0;
+  margin-top: 10px;
 }
 
 /* CONFIRMATION */
@@ -133,7 +132,6 @@ input[type="date"] {
   border-radius: 14px;
   background: #fff;
   box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-  text-align: center;
 }
 
 /* SIGNATURE */
@@ -144,13 +142,6 @@ input[type="date"] {
   opacity: 0;
   transition: opacity 1s ease;
 }
-
-/* ANIMATION */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px);}
-  to { opacity: 1; transform: translateY(0);}
-}
-
 </style>
 </head>
 
@@ -160,7 +151,7 @@ input[type="date"] {
 
 <h1>Hey Dr. Palak Bansal 👩‍⚕️</h1>
 
-<p>First of all — congratulations ✨ A hugeeee milestone, and very well deserved.</p>
+<p>First of all — congratulations ✨ A huge milestone, and very well deserved.</p>
 
 <p>
 After years of studying, exams, long hours, and everything that comes with becoming a radiologist —
@@ -177,14 +168,25 @@ reports, and diagnostic superpowers ✨
 </p>
 
 <div class="buttons">
-  <button class="primary" onclick="openCalendar()">Book Celebration Appointment 📅</button>
-  <button class="secondary" id="declineBtn">Decline Appointment</button>
-  <button class="pinky" onclick="funMsg()">Palak's Pinky Promise 💖</button>
+  <button class="primary" onclick="openCalendar()">
+    Book Celebration Appointment 📅
+  </button>
+
+  <button class="secondary" disabled>
+    Decline Appointment
+  </button>
+
+  <button class="pinky" onclick="funMsg()">
+    Sometime Later — Palak's Pinky Promise 💖
+  </button>
 </div>
 
 <div id="calendarBox">
+  <p style="margin-top:10px;">Select a convenient date:</p>
   <input type="date" id="datePicker"><br>
-  <button class="primary" onclick="confirmBooking()">Confirm Appointment</button>
+  <button class="primary" onclick="confirmBooking()">
+    Confirm Appointment
+  </button>
 </div>
 
 <div id="confirmation">
@@ -198,16 +200,16 @@ reports, and diagnostic superpowers ✨
 </div>
 
 <script>
-
-/* calendar */
 function openCalendar() {
   document.getElementById("calendarBox").style.display = "block";
 }
 
-/* confirm */
 function confirmBooking() {
   let d = document.getElementById("datePicker").value;
-  if (!d) return alert("Select a date 🙂");
+  if (!d) {
+    alert("Please select a date 🙂");
+    return;
+  }
 
   document.getElementById("confirmation").style.display = "block";
   let sig = document.getElementById("signature");
@@ -215,31 +217,10 @@ function confirmBooking() {
   setTimeout(() => sig.style.opacity = 1, 100);
 }
 
-/* pinky */
 function funMsg() {
-  alert("Pinky promise recorded 💖");
+  alert("Noted 🙂 We’ll keep this pending for later.");
 }
-
-/* dodge button */
-let btn = document.getElementById("declineBtn");
-
-btn.addEventListener("mouseover", () => {
-  let jokes = [
-    "Radiology report inconclusive",
-    "Invalid selection",
-    "Diagnostic error",
-    "Please reassess findings"
-  ];
-
-  btn.innerText = jokes[Math.floor(Math.random() * jokes.length)];
-
-  btn.style.position = "absolute";
-  btn.style.left = Math.random()*60 + "%";
-  btn.style.top = Math.random()*60 + "%";
-});
-
 </script>
 
 </body>
 </html>
-``
