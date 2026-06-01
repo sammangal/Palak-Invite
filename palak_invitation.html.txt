@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Celebration Appointment</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Inter:wght@300;400;500&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  height: 100vh;
+  color: #2d2d2d;
+  overflow-x: hidden;
+}
+
+/* WATERMARK BACKGROUND */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url('palak.jpg') center/cover no-repeat;
+  filter: blur(6px) grayscale(40%);
+  opacity: 0.2;
+  z-index: -2;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(to bottom right, #ffffffdd, #fff3f7dd);
+  z-index: -1;
+}
+
+/* CONTAINER */
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+/* TYPOGRAPHY */
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem;
+  margin-bottom: 20px;
+}
+
+p {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+/* CARD */
+.card {
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(12px);
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+/* BUTTONS */
+.buttons {
+  margin-top: 25px;
+  position: relative;
+}
+
+button {
+  padding: 13px 22px;
+  margin: 10px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: 0.25s ease;
+}
+
+/* PRIMARY */
+.primary {
+  background: #ff5f8f;
+  color: white;
+}
+
+.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(255,95,143,0.4);
+}
+
+/* SECONDARY (DODGE) */
+.secondary {
+  background: #eaeaea;
+}
+
+/* THIRD BUTTON */
+.pinky {
+  background: #ffe4ef;
+}
+
+/* CALENDAR */
+#calendarBox {
+  display: none;
+  margin-top: 20px;
+}
+
+input[type="date"] {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+/* CONFIRMATION */
+#confirmation {
+  display: none;
+  margin-top: 25px;
+  padding: 20px;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+/* SIGNATURE */
+#signature {
+  margin-top: 20px;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  display: none;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+/* FLOATING EFFECT */
+.float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {transform: translateY(0);}
+  50% {transform: translateY(-8px);}
+  100% {transform: translateY(0);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="card float">
+
+    <h1>Hey Dr. Palak Bansal 👩‍⚕️</h1>
+
+    <p>
+      First of all — congratulations ✨ 
+      A huge milestone, and very well deserved.
+    </p>
+
+    <p>
+      After years of studying, exams, long hours, and everything that comes with becoming a radiologist —
+      finally stepping into your role at <b>Holy Family Hospital</b> is something worth celebrating properly.
+    </p>
+
+    <p>
+      So I thought… 
+      this achievement definitely calls for a <b>celebration</b> ☕🍽️
+    </p>
+
+    <p>
+      Completely at your convenience, of course — 
+      whenever your schedule allows.
+    </p>
+
+    <p>
+      …and perhaps spend some time with the brilliant mind behind all those scans,
+      reports, and diagnostic superpowers ✨
+    </p>
+
+    <div class="buttons">
+      <button class="primary" onclick="openCalendar()">
+        Book Celebration Appointment 📅
+      </button>
+
+      <button class="secondary" id="declineBtn">
+        Decline Appointment
+      </button>
+
+      <button class="pinky" onclick="funMsg()">
+        Palak's Pinky Promise 💖
+      </button>
+    </div>
+
+    <!-- CALENDAR -->
+    <div id="calendarBox">
+      <p style="margin-top:15px;">Select a convenient date:</p>
+      <input type="date" id="datePicker"/>
+      <br>
+      <button class="primary" onclick="confirmBooking()">
+        Confirm Appointment
+      </button>
+    </div>
+
+    <!-- CONFIRMATION -->
+    <div id="confirmation">
+      <p><b>Celebration Appointment Logged ✔️</b></p>
+      <p>
+        Impression: Findings are suggestive of coffee / dinner / celebration.
+      </p>
+      <p>
+        Clinical correlation recommended ✨
+      </p>
+    </div>
+
+    <div id="signature">— Shivam Mangal</div>
+
+  </div>
+</div>
+
+<script>
+/* CALENDAR */
+function openCalendar() {
+  document.getElementById("calendarBox").style.display = "block";
+}
+
+/* CONFIRM */
+function confirmBooking() {
+  const date = document.getElementById("datePicker").value;
+
+  if (!date) {
+    alert("Please select a date first 🙂");
+    return;
+  }
+
+  document.getElementById("confirmation").style.display = "block";
+
+  const sig = document.getElementById("signature");
+  sig.style.display = "block";
+  setTimeout(() => sig.style.opacity = 1, 100);
+
+  /* silent mail trigger */
+  const mailLink = "mailto:sammangal1996@gmail.com?subject=Celebration Appointment&body=Chosen Date: " + date;
+  const a = document.createElement('a');
+  a.href = mailLink;
+  a.click();
+}
+
+/* FUN BUTTON */
+function funMsg() {
+  alert("Pinky promise noted. Radiology level commitment recorded 💖");
+}
+
+/* DODGING BUTTON */
+const btn = document.getElementById("declineBtn");
+
+btn.addEventListener("mouseover", () => {
+  const jokes = [
+    "Diagnostic error detected",
+    "Radiology report inconclusive",
+    "Invalid selection",
+    "Option unavailable",
+    "Please reassess findings"
+  ];
+
+  btn.innerText = jokes[Math.floor(Math.random() * jokes.length)];
+
+  const x = Math.random() * (window.innerWidth - 150);
+  const y = Math.random() * (window.innerHeight - 80);
+
+  btn.style.position = "absolute";
+  btn.style.left = `${x}px`;
+  btn.style.top = `${y}px`;
+});
+</script>
+
+</body>
+</html>
